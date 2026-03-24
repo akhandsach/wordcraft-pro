@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WordCraft Pro – free online word counter, character counter, readability checker, and writing tool." />
+  <title>WordCraft Pro – Free Word Counter & Writing Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo" id="logo-link">
+        <span class="logo-icon">✍️</span>
+        <span class="logo-text">WordCraft <span class="logo-pro">Pro</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#" class="nav-link active" id="nav-home">Home</a></li>
+        <li><a href="#tools-section" class="nav-link" id="nav-tools">Tools</a></li>
+        <li class="dropdown" id="more-dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="more-toggle">More ▾</a>
+          <div class="dropdown-menu" id="more-menu">
+            <a href="#" class="dropdown-item" id="dd-case">Case Converter</a>
+            <a href="#" class="dropdown-item" id="dd-clean">Clean Text</a>
+            <a href="#" class="dropdown-item" id="dd-random">Random Picker</a>
+            <a href="#" class="dropdown-item" id="dd-alpha">Alphabetize</a>
+          </div>
+        </li>
+        <li><a href="#about-section" class="nav-link" id="nav-about">About</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn-theme-toggle" id="theme-toggle" title="Toggle dark/light mode">🌙</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+
+  <!-- STAT BAR -->
+  <div class="stat-bar" id="stat-bar">
+    <div class="stat-bar-inner">
+      <div class="stat-item" id="stat-words">
+        <span class="stat-value" id="sb-words">0</span>
+        <span class="stat-label">Words</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="stat-chars">
+        <span class="stat-value" id="sb-chars">0</span>
+        <span class="stat-label">Characters</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="stat-sentences">
+        <span class="stat-value" id="sb-sentences">0</span>
+        <span class="stat-label">Sentences</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="stat-paragraphs">
+        <span class="stat-value" id="sb-paragraphs">0</span>
+        <span class="stat-label">Paragraphs</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="stat-reading">
+        <span class="stat-value" id="sb-reading">0 sec</span>
+        <span class="stat-label">Read Time</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item" id="stat-speaking">
+        <span class="stat-value" id="sb-speaking">0 sec</span>
+        <span class="stat-label">Speak Time</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <main class="main-layout" id="main-layout">
+
+    <!-- EDITOR AREA -->
+    <section class="editor-section" id="editor-section">
+
+      <!-- TOOLBAR -->
+      <div class="toolbar" id="toolbar">
+        <div class="toolbar-left">
+          <div class="tool-group" id="case-group">
+            <button class="tool-btn dropdown-trigger" id="case-btn" title="Convert case">Aa Case ▾</button>
+            <div class="tool-dropdown" id="case-dropdown">
+              <button class="tool-dd-item" id="case-upper">UPPERCASE</button>
+              <button class="tool-dd-item" id="case-lower">lowercase</button>
+              <button class="tool-dd-item" id="case-title">Title Case</button>
+              <button class="tool-dd-item" id="case-sentence">Sentence case</button>
+              <button class="tool-dd-item" id="case-alternate">aLtErNaTe CaSe</button>
+            </div>
+          </div>
+
+          <div class="tool-group" id="goal-group">
+            <button class="tool-btn dropdown-trigger" id="goal-btn" title="Set writing goal">🎯 Goal ▾</button>
+            <div class="tool-dropdown" id="goal-dropdown">
+              <div class="goal-form" id="goal-form">
+                <label for="goal-type-select">Type:</label>
+                <select id="goal-type-select">
+                  <option value="words">Words</option>
+                  <option value="characters">Characters</option>
+                  <option value="sentences">Sentences</option>
+                  <option value="paragraphs">Paragraphs</option>
+                </select>
+                <label for="goal-value-input">Target:</label>
+                <input type="number" id="goal-value-input" min="1" placeholder="e.g. 500" />
+                <button class="btn-primary" id="set-goal-btn">Set Goal</button>
+                <button class="btn-ghost" id="clear-goal-btn">Clear</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="tool-btn" id="find-replace-btn" title="Find & Replace">🔍 Find</button>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="tool-btn icon-btn" id="undo-btn" title="Undo">↩ Undo</button>
+          <button class="tool-btn icon-btn" id="redo-btn" title="Redo">↪ Redo</button>
+          <button class="tool-btn icon-btn" id="copy-btn" title="Copy text">📋 Copy</button>
+          <button class="tool-btn icon-btn danger" id="clear-btn" title="Clear all">🗑 Clear</button>
+        </div>
+      </div>
+
+      <!-- GOAL PROGRESS BAR -->
+      <div class="goal-bar-wrap" id="goal-bar-wrap" style="display:none">
+        <div class="goal-bar-label" id="goal-bar-label">Goal: 0 / 500 words</div>
+        <div class="goal-bar" id="goal-bar-track">
+          <div class="goal-bar-fill" id="goal-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- FIND & REPLACE PANEL -->
+      <div class="find-replace-panel" id="find-replace-panel" style="display:none">
+        <input type="text" id="find-input" placeholder="Find..." />
+        <input type="text" id="replace-input" placeholder="Replace with..." />
+        <button class="btn-primary" id="do-replace-btn">Replace All</button>
+        <button class="btn-ghost" id="close-fr-btn">✕</button>
+        <span class="fr-result" id="fr-result"></span>
+      </div>
+
+      <!-- TEXTAREA -->
+      <div class="editor-wrap" id="editor-wrap">
+        <textarea id="main-editor" spellcheck="true" placeholder="Start typing or paste your text here to get started…&#10;&#10;WordCraft Pro will instantly count your words, characters, sentences, paragraphs, and more."></textarea>
+      </div>
+
+    </section>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+      <!-- PANEL TABS -->
+      <div class="panel-tabs" id="panel-tabs">
+        <button class="panel-tab active" id="tab-details" data-panel="panel-details">Details</button>
+        <button class="panel-tab" id="tab-flow" data-panel="panel-flow">Flow</button>
+        <button class="panel-tab" id="tab-keywords" data-panel="panel-keywords">Keywords</button>
+      </div>
+
+      <!-- DETAILS PANEL -->
+      <div class="sidebar-panel active" id="panel-details">
+        <div class="detail-group">
+          <h3 class="detail-section-title">Basic Stats</h3>
+          <div class="detail-row">
+            <span class="detail-label">Words</span>
+            <span class="detail-value" id="d-words">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Characters (no spaces)</span>
+            <span class="detail-value" id="d-chars-ns">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Characters (with spaces)</span>
+            <span class="detail-value" id="d-chars-s">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Sentences</span>
+            <span class="detail-value" id="d-sentences">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Paragraphs</span>
+            <span class="detail-value" id="d-paragraphs">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Lines</span>
+            <span class="detail-value" id="d-lines">0</span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <h3 class="detail-section-title">Advanced Stats</h3>
+          <div class="detail-row">
+            <span class="detail-label">Unique Words</span>
+            <span class="detail-value" id="d-unique">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Avg. Word Length</span>
+            <span class="detail-value" id="d-avg-word">0</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Avg. Sentence Length</span>
+            <span class="detail-value" id="d-avg-sentence">0 words</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Longest Sentence</span>
+            <span class="detail-value" id="d-longest-sentence">0 words</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Shortest Sentence</span>
+            <span class="detail-value" id="d-shortest-sentence">0 words</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Syllables</span>
+            <span class="detail-value" id="d-syllables">0</span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <h3 class="detail-section-title">Readability</h3>
+          <div class="detail-row">
+            <span class="detail-label">Reading Level</span>
+            <span class="detail-value badge" id="d-reading-level">–</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Flesch Score</span>
+            <span class="detail-value" id="d-flesch">–</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Read Time</span>
+            <span class="detail-value" id="d-read-time">0 sec</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Speak Time</span>
+            <span class="detail-value" id="d-speak-time">0 sec</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLOW SCORE PANEL -->
+      <div class="sidebar-panel" id="panel-flow">
+        <div class="flow-info">
+          <p class="flow-description">Flow Score visualizes your sentence length variety. A mix of short, medium and long sentences makes writing more engaging.</p>
+        </div>
+        <div class="flow-chart" id="flow-chart">
+          <div class="flow-empty" id="flow-empty">Start writing to see your flow score.</div>
+        </div>
+        <div class="flow-legend">
+          <span class="legend-dot short"></span><span>Short (&lt;10 words)</span>
+          <span class="legend-dot medium"></span><span>Medium (10–20)</span>
+          <span class="legend-dot long"></span><span>Long (&gt;20 words)</span>
+        </div>
+        <div class="flow-score-display" id="flow-score-display" style="display:none">
+          Flow Score: <span class="flow-score-val" id="flow-score-val">–</span>
+        </div>
+      </div>
+
+      <!-- KEYWORD DENSITY PANEL -->
+      <div class="sidebar-panel" id="panel-keywords">
+        <div class="kd-tabs" id="kd-tabs">
+          <button class="kd-tab active" data-n="1" id="kd-tab-1">1-Word</button>
+          <button class="kd-tab" data-n="2" id="kd-tab-2">2-Word</button>
+          <button class="kd-tab" data-n="3" id="kd-tab-3">3-Word</button>
+        </div>
+        <div class="kd-list" id="kd-list">
+          <div class="kd-empty" id="kd-empty">Start typing to see keyword density.</div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- TOOLS SECTION -->
+  <section class="tools-section" id="tools-section">
+    <div class="tools-inner">
+      <h2 class="section-title">More Tools</h2>
+      <div class="tools-grid" id="tools-grid">
+        <div class="tool-card" id="tool-case-card">
+          <div class="tool-card-icon">🔤</div>
+          <h3>Case Converter</h3>
+          <p>Convert text between UPPERCASE, lowercase, Title Case, and more.</p>
+          <button class="btn-primary" id="open-case-tool">Open Tool</button>
+        </div>
+        <div class="tool-card" id="tool-clean-card">
+          <div class="tool-card-icon">🧹</div>
+          <h3>Clean Text</h3>
+          <p>Remove extra spaces, blank lines, and special characters from your text.</p>
+          <button class="btn-primary" id="open-clean-tool">Open Tool</button>
+        </div>
+        <div class="tool-card" id="tool-alpha-card">
+          <div class="tool-card-icon">🔢</div>
+          <h3>Alphabetize</h3>
+          <p>Sort a list of words or lines in alphabetical or reverse order.</p>
+          <button class="btn-primary" id="open-alpha-tool">Open Tool</button>
+        </div>
+        <div class="tool-card" id="tool-random-card">
+          <div class="tool-card-icon">🎲</div>
+          <h3>Random Picker</h3>
+          <p>Pick a random item from your list – great for decisions and giveaways.</p>
+          <button class="btn-primary" id="open-random-tool">Open Tool</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about-section">
+    <div class="about-inner">
+      <h2 class="section-title">About WordCraft Pro</h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">⚡</div>
+          <h3>Real-Time Analysis</h3>
+          <p>Instant word, character, sentence, and paragraph counts as you type — no button clicking needed.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">📊</div>
+          <h3>Deep Insights</h3>
+          <p>Get readability scores, unique word counts, flow analysis, and keyword density all in one place.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🔒</div>
+          <h3>Private & Secure</h3>
+          <p>All processing happens in your browser. Your text never leaves your device.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🌙</div>
+          <h3>Dark Mode</h3>
+          <p>Easy on your eyes day or night with a beautiful dark theme toggle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL OVERLAY -->
+  <div class="modal-overlay" id="modal-overlay" style="display:none">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Tool</h2>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">✍️</span>
+        <span class="footer-name">WordCraft Pro</span>
+      </div>
+      <p class="footer-tagline">The smartest free writing tool on the web.</p>
+      <div class="footer-links">
+        <a href="#" id="f-privacy">Privacy Policy</a>
+        <a href="#" id="f-terms">Terms of Use</a>
+        <a href="#about-section" id="f-about">About</a>
+        <a href="#tools-section" id="f-tools">Tools</a>
+      </div>
+      <p class="footer-copy">© 2025 WordCraft Pro. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Vercel Web Analytics – tracks visitors & page views -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Vercel Speed Insights – tracks Core Web Vitals -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</body>
+</html>
